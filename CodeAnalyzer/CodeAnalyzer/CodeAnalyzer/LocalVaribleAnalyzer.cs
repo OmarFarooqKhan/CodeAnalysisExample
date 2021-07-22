@@ -33,14 +33,13 @@ namespace CodeAnalyzer
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
             var _localDeclaration = (LocalDeclarationStatementSyntax)context.Node;
-            
 
-            foreach (VariableDeclaratorSyntax varibleDeclaratorNode in _localDeclaration.Declaration.Variables)
+
+            foreach (VariableDeclaratorSyntax varibleDeclaratorNode in _localDeclaration.Declaration.Variables) // Can have multiple varibles declared in one line.
             {
-
-                if (!varibleDeclaratorNode.Identifier.ValueText.StartsWith("_"))
+                if (!varibleDeclaratorNode.Identifier.Text.StartsWith("_"))
                 {
-                    Diagnostic report = Diagnostic.Create(Rule, varibleDeclaratorNode.Identifier.GetLocation(), varibleDeclaratorNode.Identifier.ValueText);
+                    Diagnostic report = Diagnostic.Create(Rule, varibleDeclaratorNode.Identifier.GetLocation(), varibleDeclaratorNode.Identifier.Text);
                     context.ReportDiagnostic(report);
                 }
             }
